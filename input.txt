@@ -1,0 +1,1 @@
+setenv autoload no;dhcp;setenv loadaddr 0x80000000; setenv serverip 192.168.0.170;setenv tftproot /home/cmptvm/cmpt433/public/baremetal;setenv bootfile                ${tftproot}/download.bin;tftp ${loadaddr} ${bootfile};echo *** Booting to BareMetal ***;go ${loadaddr};

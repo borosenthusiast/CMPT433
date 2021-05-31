@@ -1,0 +1,19 @@
+{
+  "name": "as3-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+		"socket.io": "~0.9.6",
+		"mime": "~1.2.7",
+    "express": "~4.17.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "orion hsu",
+  "license": "ISC"
+}

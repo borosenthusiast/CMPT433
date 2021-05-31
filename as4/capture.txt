@@ -1,0 +1,218 @@
+debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ cd /mnt/remote/drivers/
+debian@ohsu-beagle:/mnt/remote/drivers$ uname -r
+5.3.7-ohsu-bone13
+debian@ohsu-beagle:/mnt/remote/drivers$ cat /proc/cmdline
+console=ttyO0,115200n8 root=/dev/mmcblk1p1 ro rootfstype=ext4 rootwait
+debian@ohsu-beagle:/mnt/remote/drivers$ ifconfig
+eth0: flags=-28605<UP,BROADCAST,RUNNING,MULTICAST,DYNAMIC>  mtu 1500
+        inet 192.168.0.102  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 fe80::e615:f6ff:fef9:f786  prefixlen 64  scopeid 0x20<link>
+        ether e4:15:f6:f9:f7:86  txqueuelen 1000  (Ethernet)
+        RX packets 588699  bytes 173757659 (165.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 308590  bytes 24968828 (23.8 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 160  bytes 12960 (12.6 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 160  bytes 12960 (12.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+usb0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.7.2  netmask 255.255.255.252  broadcast 192.168.7.3
+        inet6 fe80::1eba:8cff:fea2:ed70  prefixlen 64  scopeid 0x20<link>
+        ether 1c:ba:8c:a2:ed:70  txqueuelen 1000  (Ethernet)
+        RX packets 53847  bytes 10250840 (9.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 38615  bytes 8333959 (7.9 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+usb1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.6.2  netmask 255.255.255.252  broadcast 192.168.6.3
+        inet6 fe80::1eba:8cff:fea2:ed6d  prefixlen 64  scopeid 0x20<link>
+        ether 1c:ba:8c:a2:ed:6d  txqueuelen 1000  (Ethernet)
+        RX packets 47699  bytes 9598564 (9.1 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 35144  bytes 6131652 (5.8 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+debian@ohsu-beagle:/mnt/remote/drivers$ modinfo morsecode.ko
+filename:       /mnt/remote/drivers/morsecode.ko
+license:        GPL
+description:    Morse Code LED Driver - CMPT 433 Assignment 4.
+author:         Orion Hsu
+depends:        
+name:           morsecode
+vermagic:       5.3.7-ohsu-bone13 preempt mod_unload modversions ARMv7 thumb2 p2v8 
+debian@ohsu-beagle:/mnt/remote/drivers$ sudo insmod morsecode.ko
+[sudo] password for debian: 
+insmod: ERROR: could not insert module morsecode.ko: File exists
+debian@ohsu-beagle:/mnt/remote/drivers$ sudo rmmod morsecode
+debian@ohsu-beagle:/mnt/remote/drivers$ sudo insmod morsecode.ko
+debian@ohsu-beagle:/mnt/remote/drivers$ lsmod
+Module                  Size  Used by
+morsecode              16384  0
+evdev                  20480  1
+8021q                  24576  0
+garp                   16384  1 8021q
+stp                    16384  1 garp
+mrp                    16384  1 8021q
+llc                    16384  2 garp,stp
+usb_f_mass_storage     40960  2
+usb_f_acm              20480  2
+u_serial               24576  3 usb_f_acm
+usb_f_ecm              20480  2
+usb_f_rndis            24576  2
+u_ether                24576  2 usb_f_ecm,usb_f_rndis
+libcomposite           45056  16 usb_f_ecm,usb_f_acm,usb_f_mass_storage,usb_f_rndis
+iptable_nat            16384  0
+nf_nat                 28672  1 iptable_nat
+nf_conntrack           98304  1 nf_nat
+nf_defrag_ipv6         20480  1 nf_conntrack
+nf_defrag_ipv4         16384  1 nf_conntrack
+iptable_mangle         16384  0
+iptable_filter         16384  0
+spidev                 20480  0
+ip_tables              24576  3 iptable_mangle,iptable_filter,iptable_nat
+x_tables               24576  3 iptable_mangle,ip_tables,iptable_filter
+debian@ohsu-beagle:/mnt/remote/drivers$ cd /sys/class/leds/beaglebone\:green\:usr0
+debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ echo morse-code > trigger
+debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ cat trigger
+none usb-gadget usb-host kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftlock kbd-altgrlock kbd-ctrllock kbd-altlock kbd-shiftllock kbd-shiftrlock kbd-ctrlllock kbd-ctrlrlock mmc0 mmc1 timer oneshot disk-activity disk-read disk-write ide-disk mtd nand-disk heartbeat backlight gpio cpu cpu0 activity default-on panic netdev 4a101000.mdio:00:link 4a101000.mdio:00:100Mbps 4a101000.mdio:00:10Mbps [morse-code] 
+debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ echo 'Hello world.'| sudo tee /dev/morse-code
+Hello world.
+debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ sudo cat /dev/morse-code
+.... . .-.. .-.. ---   .-- --- .-. .-.. -..debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ rmmod morsecode
+rmmod: ERROR: ../libkmod/libkmod-module.c:793 kmod_module_remove_module() could not remove 'morsecode': Operation not permitted
+rmmod: ERROR: could not remove module morsecode: Operation not permitted
+debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ sudo rmmod morsecode
+debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ lsmod
+Module                  Size  Used by
+evdev                  20480  1
+8021q                  24576  0
+garp                   16384  1 8021q
+stp                    16384  1 garp
+mrp                    16384  1 8021q
+llc                    16384  2 garp,stp
+usb_f_mass_storage     40960  2
+usb_f_acm              20480  2
+u_serial               24576  3 usb_f_acm
+usb_f_ecm              20480  2
+usb_f_rndis            24576  2
+u_ether                24576  2 usb_f_ecm,usb_f_rndis
+libcomposite           45056  16 usb_f_ecm,usb_f_acm,usb_f_mass_storage,usb_f_rndis
+iptable_nat            16384  0
+nf_nat                 28672  1 iptable_nat
+nf_conntrack           98304  1 nf_nat
+nf_defrag_ipv6         20480  1 nf_conntrack
+nf_defrag_ipv4         16384  1 nf_conntrack
+iptable_mangle         16384  0
+iptable_filter         16384  0
+spidev                 20480  0
+ip_tables              24576  3 iptable_mangle,iptable_filter,iptable_nat
+x_tables               24576  3 iptable_mangle,ip_tables,iptable_filter
+debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ dmesg | tail -100
+[694020.388603] In my_write() doing writing
+[694022.500523] In my_write() doing writing
+[694023.716442] In my_write() doing writing
+[694026.244518] In my_write() doing writing
+[694027.492440] In my_write() doing writing
+[694029.188482] In my_write() doing writing
+[694031.300449] In my_write() doing writing
+[694034.244500] In my_write() doing writing
+[694036.772441] In my_write() doing writing
+[694037.988523] In my_write() doing writing
+[694040.516622] In my_write() doing writing
+[694042.628522] In my_write() doing writing
+[694043.460557] In my_write() doing writing
+[694045.156522] In my_write() doing writing
+[694047.684442] In my_write() doing writing
+[694049.348482] In my_write() doing writing
+[694049.352709] In my_write() doing writing
+[694209.441363] ----> morsecode driver my_exit(): file /dev/morse-code.
+[694212.956727] ----> morsecode driver my_init(): file /dev/morse-code.
+[694267.297222] In my_write() doing writing
+[694269.380521] In my_write() doing writing
+[694270.212541] In my_write() doing writing
+[694272.740559] In my_write() doing writing
+[694275.268439] In my_write() doing writing
+[694278.212561] In my_write() doing writing
+[694279.428446] In my_write() doing writing
+[694281.956516] In my_write() doing writing
+[694284.900617] In my_write() doing writing
+[694287.012446] In my_write() doing writing
+[694289.540562] In my_write() doing writing
+[694291.652440] In my_write() doing writing
+[694291.656467] In my_write() doing writing
+[694361.469118] In my_write() doing writing
+[694363.972582] In my_write() doing writing
+[694366.084513] In my_write() doing writing
+[694367.364439] In my_write() doing writing
+[694368.580521] In my_write() doing writing
+[694370.244598] In my_write() doing writing
+[694373.188565] In my_write() doing writing
+[694375.716519] In my_write() doing writing
+[694376.996519] In my_write() doing writing
+[694377.002513] In my_write() doing writing
+[694378.244447] In my_write() doing writing
+[694380.772439] In my_write() doing writing
+[694382.852560] In my_write() doing writing
+[694384.548440] In my_write() doing writing
+[694385.828560] In my_write() doing writing
+[694387.044438] In my_write() doing writing
+[694389.572521] In my_write() doing writing
+[694390.820439] In my_write() doing writing
+[694393.348474] In my_write() doing writing
+[694395.428637] In my_write() doing writing
+[694396.708561] In my_write() doing writing
+[694397.924437] In my_write() doing writing
+[694399.206856] In my_write() doing writing
+[694401.316499] In my_write() doing writing
+[694403.428440] In my_write() doing writing
+[694406.373500] In my_write() doing writing
+[694408.484521] In my_write() doing writing
+[694411.017519] In my_write() doing writing
+[694413.092482] In my_write() doing writing
+[694414.308558] In my_write() doing writing
+[694417.668440] In my_write() doing writing
+[694420.612438] In my_write() doing writing
+[694422.308481] In my_write() doing writing
+[694424.420560] In my_write() doing writing
+[694425.252439] In my_write() doing writing
+[694427.364599] In my_write() doing writing
+[694428.580440] In my_write() doing writing
+[694431.108519] In my_write() doing writing
+[694432.356438] In my_write() doing writing
+[694434.052438] In my_write() doing writing
+[694436.164440] In my_write() doing writing
+[694439.108520] In my_write() doing writing
+[694441.636439] In my_write() doing writing
+[694442.852562] In my_write() doing writing
+[694445.380617] In my_write() doing writing
+[694447.492517] In my_write() doing writing
+[694448.324520] In my_write() doing writing
+[694450.020560] In my_write() doing writing
+[694452.548560] In my_write() doing writing
+[694454.212439] In my_write() doing writing
+[694454.216452] In my_write() doing writing
+[695427.904038] ----> morsecode driver my_exit(): file /dev/morse-code.
+[695429.772688] ----> morsecode driver my_init(): file /dev/morse-code.
+[695532.470354] In my_write() doing writing
+[695534.564433] In my_write() doing writing
+[695535.396466] In my_write() doing writing
+[695537.924426] In my_write() doing writing
+[695540.452431] In my_write() doing writing
+[695543.396429] In my_write() doing writing
+[695544.612433] In my_write() doing writing
+[695547.140431] In my_write() doing writing
+[695550.084404] In my_write() doing writing
+[695552.196403] In my_write() doing writing
+[695554.724433] In my_write() doing writing
+[695556.836430] In my_write() doing writing
+[695556.840601] In my_write() doing writing
+[695801.666443] ----> morsecode driver my_exit(): file /dev/morse-code.
+debian@ohsu-beagle:/sys/class/leds/beaglebone:green:usr0$ 

@@ -1,0 +1,327 @@
+woofers@DESKTOP-NR9RJK5:/mnt/c/Users/orion/Desktop/cmpt 433/noworky$ gcc -Wall -g -std=c99 -D _POSIX_C_SOURCE=200809L -Werror noworky.c -o noworky
+woofers@DESKTOP-NR9RJK5:/mnt/c/Users/orion/Desktop/cmpt 433/noworky$ gdb ./noworky
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./noworky...
+(gdb) run
+Starting program: /mnt/c/Users/orion/Desktop/cmpt 433/noworky/noworky
+noworky: by Brian Fraser
+Initial values:
+  0: 000.0 --> 000.0
+  1: 002.0 --> 010.0
+  2: 004.0 --> 020.0
+  3: 006.0 --> 030.0
+  4: 008.0 --> 040.0
+  5: 010.0 --> 050.0
+  6: 012.0 --> 060.0
+  7: 014.0 --> 070.0
+  8: 016.0 --> 080.0
+  9: 018.0 --> 090.0
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00005555555551bd in swapContent (d1=0x555d555596a8, d2=0x555d55559708) at noworky.c:17
+17              double tmp = *d2;
+(gdb) bt
+#0  0x00005555555551bd in swapContent (d1=0x555d555596a8, d2=0x555d55559708) at noworky.c:17
+#1  0x0000555555555235 in tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:29
+#2  0x00005555555553dd in main () at noworky.c:72
+(gdb) break 17
+Breakpoint 1 at 0x5555555551b9: file noworky.c, line 17.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /mnt/c/Users/orion/Desktop/cmpt 433/noworky/noworky
+noworky: by Brian Fraser
+Initial values:
+  0: 000.0 --> 000.0
+  1: 002.0 --> 010.0
+  2: 004.0 --> 020.0
+  3: 006.0 --> 030.0
+  4: 008.0 --> 040.0
+  5: 010.0 --> 050.0
+  6: 012.0 --> 060.0
+  7: 014.0 --> 070.0
+  8: 016.0 --> 080.0
+  9: 018.0 --> 090.0
+
+Breakpoint 1, swapContent (d1=0x5555555596f8, d2=0x555555559758) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) list
+14       */
+15      void swapContent(double *d1, double *d2)
+16      {
+17              double tmp = *d2;
+18              *d2 = *d1;
+19              *d1 = tmp;
+20      }
+21
+22      /*
+23       * Swap the contents of the two arrays.
+(gdb) info variables
+All defined variables:
+
+Non-debugging symbols:
+0x0000555555556000  _IO_stdin_used
+0x0000555555556088  __GNU_EH_FRAME_HDR
+0x000055555555624c  __FRAME_END__
+0x0000555555557da0  __frame_dummy_init_array_entry
+0x0000555555557da0  __init_array_start
+0x0000555555557da8  __do_global_dtors_aux_fini_array_entry
+0x0000555555557da8  __init_array_end
+0x0000555555557db0  _DYNAMIC
+0x0000555555557fa0  _GLOBAL_OFFSET_TABLE_
+0x0000555555558000  __data_start
+0x0000555555558000  data_start
+0x0000555555558008  __dso_handle
+0x0000555555558010  __TMC_END__
+0x0000555555558010  __bss_start
+0x0000555555558010  _edata
+0x0000555555558010  completed
+0x0000555555558018  _end
+0x00007ffff7ffc600  _dl_argv
+0x00007ffff7ffc620  _rtld_global_ro
+0x00007ffff7ffce58  __libc_stack_end
+0x00007ffff7ffce60  __libc_enable_secure
+0x00007ffff7ffd060  _rtld_global
+0x00007ffff7ffe160  _r_debug
+0x00007ffff7dc6008  __resp
+0x00007ffff7dc6010  errno
+0x00007ffff7dc6074  __h_errno
+--Type <RET> for more, q to quit, c to continue without paging--
+0x00007ffff7f7d405  _libc_intl_domainname
+0x00007ffff7f81080  _itoa_lower_digits
+0x00007ffff7f85010  _nl_default_dirname
+0x00007ffff7f85640  in6addr_any
+0x00007ffff7f85b00  in6addr_loopback
+0x00007ffff7f863bc  _sys_nerr
+0x00007ffff7f863bc  sys_nerr
+0x00007ffff7f863c0  _sys_nerr
+0x00007ffff7f863c0  sys_nerr
+0x00007ffff7f863c4  _sys_nerr
+0x00007ffff7f863c4  sys_nerr
+0x00007ffff7f863c8  _sys_nerr
+0x00007ffff7f863c8  sys_nerr
+0x00007ffff7f863d4  h_nerr
+0x00007ffff7faf6a0  _sys_errlist
+0x00007ffff7faf6a0  sys_errlist
+0x00007ffff7fafae0  _sys_siglist
+0x00007ffff7fafae0  sys_siglist
+0x00007ffff7fafd00  sys_sigabbrev
+0x00007ffff7fb0120  h_errlist
+0x00007ffff7fb11a4  __fpu_control
+0x00007ffff7fb12f0  obstack_exit_failure
+0x00007ffff7fb1338  re_max_failures
+0x00007ffff7fb133c  optopt
+0x00007ffff7fb1340  opterr
+0x00007ffff7fb1344  optind
+0x00007ffff7fb1404  argp_err_exit_status
+0x00007ffff7fb1408  __check_rhosts_file
+0x00007ffff7fb16e0  __ctype32_toupper
+--Type <RET> for more, q to quit, c to continue without paging--q
+Quit
+(gdb) info locals
+tmp = 90
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) info locals
+i = 9
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) info locals
+i = 8
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x5555555596f0, d2=0x555555559750) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x5555555596e8, d2=0x555555559748) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x5555555596e0, d2=0x555555559740) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) nextr
+Undefined command: "nextr".  Try "help".
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x5555555596d8, d2=0x555555559738) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) info locals
+i = 4
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x5555555596d0, d2=0x555555559730) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x5555555596c8, d2=0x555555559728) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x5555555596c0, d2=0x555555559720) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) info locals
+i = 2
+(gdb) print array1
+$1 = (double *) 0x5555555596b0
+(gdb) print *array1
+$2 = 0
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x5555555596b8, d2=0x555555559718) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x5555555596b0, d2=0x555555559710) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+18              *d2 = *d1;
+(gdb) next
+19              *d1 = tmp;
+(gdb) next
+20      }
+(gdb) next
+tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:28
+28              for (i = size-1; i >= 0; i--) {
+(gdb) next
+29                      swapContent(array1+i, array2+i);
+(gdb) next
+
+Breakpoint 1, swapContent (d1=0x555d555596a8, d2=0x555d55559708) at noworky.c:17
+17              double tmp = *d2;
+(gdb) next
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00005555555551bd in swapContent (d1=0x555d555596a8, d2=0x555d55559708) at noworky.c:17
+17              double tmp = *d2;
+(gdb) print tmp
+$3 = 0
+(gdb) bt
+#0  0x00005555555551bd in swapContent (d1=0x555d555596a8, d2=0x555d55559708) at noworky.c:17
+#1  0x0000555555555235 in tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:29
+#2  0x00005555555553dd in main () at noworky.c:72
+(gdb) print i
+No symbol "i" in current context.
+(gdb) up
+#1  0x0000555555555235 in tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:29
+29                      swapContent(array1+i, array2+i);
+(gdb) up
+#2  0x00005555555553dd in main () at noworky.c:72
+72              tradeArrays(source, target, NUM_ELEMENTS);
+(gdb) up
+Initial frame selected; you cannot go up.
+(gdb) down
+#1  0x0000555555555235 in tradeArrays (array1=0x5555555596b0, array2=0x555555559710, size=10) at noworky.c:29
+29                      swapContent(array1+i, array2+i);
+(gdb) print i
+$4 = 4294967295
+(gdb)
